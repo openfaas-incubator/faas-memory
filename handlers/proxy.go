@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/gorilla/mux"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 )
 
@@ -10,11 +11,13 @@ func MakeProxy() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		name := vars["name"]
+		log.Info("proxy request: " + name)
 
 		v, okay := functions[name]
 		if !okay {
 			w.WriteHeader(http.StatusNotFound)
 			w.Write([]byte("{ \"status\" : \"Not found\"}"))
+			return
 		}
 
 		v.InvocationCount = v.InvocationCount + 1

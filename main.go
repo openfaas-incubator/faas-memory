@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/openfaas/faas-inmemory/handlers"
-	"github.com/openfaas/faas-inmemory/types"
-	"github.com/openfaas/faas-inmemory/version"
+	"github.com/ewilde/faas-inmemory/handlers"
+	"github.com/ewilde/faas-inmemory/types"
+	"github.com/ewilde/faas-inmemory/version"
 	"github.com/openfaas/faas-provider"
 	"os"
 	"strings"
@@ -63,6 +63,6 @@ func main() {
 		EnableBasicAuth: false,
 	}
 
-	log.Infof("listening on port %d", cfg.Port)
+	log.Infof("listening on port %d ...", cfg.Port)
 	bootstrap.Serve(&bootstrapHandlers, &bootstrapConfig)
 }

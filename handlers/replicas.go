@@ -28,7 +28,7 @@ func MakeReplicaReader() http.HandlerFunc {
 		vars := mux.Vars(r)
 		functionName := vars["name"]
 
-		var found *requests.Function
+		found := &requests.Function{}
 		found.Name = functionName
 		found.AvailableReplicas = 1
 

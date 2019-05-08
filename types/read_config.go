@@ -5,7 +5,6 @@
 package types
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 	"time"
@@ -75,29 +74,15 @@ func (ReadConfig) Read(hasEnv HasEnv) BootstrapConfig {
 
 	cfg := BootstrapConfig{}
 
-	cfg.EnableFunctionReadinessProbe = parseBoolValue(hasEnv.Getenv("enable_function_readiness_probe"), true)
 	cfg.ReadTimeout = parseIntOrDurationValue(hasEnv.Getenv("read_timeout"), time.Minute*3)
 	cfg.WriteTimeout = parseIntOrDurationValue(hasEnv.Getenv("write_timeout"), time.Minute*3)
-	cfg.ImagePullPolicy = parseString(hasEnv.Getenv("image_pull_policy"), "Always")
 	cfg.Port = parseIntValue(hasEnv.Getenv("port"), defaultTCPPort)
 
 	return cfg
 }
 
-func (ReadConfig) ensureRequired() {
-	var required = []string{ "aws_region", "lambda_execution_role" }
-
-	for _, v := range required {
-		if _, ok := os.LookupEnv(v); !ok {
-			panic(fmt.Sprintf("%s environment variable must be set, please see README.md", v))
-		}
-	}
-}
-
 // BootstrapConfig for the process.
 type BootstrapConfig struct {
-	EnableFunctionReadinessProbe bool
-	ImagePullPolicy              string
 	Port                         int
 	ReadTimeout                  time.Duration
 	WriteTimeout                 time.Duration

@@ -11,12 +11,6 @@ import (
 	"net/http"
 )
 
-// watchdogPort for the OpenFaaS function watchdog
-const watchdogPort = 8080
-
-// initialReplicasCount how many replicas to start of creating for a function
-const initialReplicasCount = 1
-
 var functions = map[string]*requests.Function{}
 
 // MakeDeployHandler creates a handler to create new functions in the cluster

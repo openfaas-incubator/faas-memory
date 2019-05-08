@@ -1,8 +1,8 @@
 FROM golang:1.10.4 as build
 
-RUN mkdir -p /go/src/github.com/openfaas/faas-inmemory/
+RUN mkdir -p /go/src/github.com/ewilde/faas-inmemory/
 
-WORKDIR /go/src/github.com/openfaas/faas-inmemory
+WORKDIR /go/src/github.com/ewilde/faas-inmemory
 
 COPY . .
 
@@ -38,6 +38,6 @@ EXPOSE 8080
 ENV http_proxy      ""
 ENV https_proxy     ""
 
-COPY --from=build /go/src/github.com/openfaas/faas-inmemory/faas-inmemory    .
+COPY --from=build /go/src/github.com/ewilde/faas-inmemory/faas-inmemory    .
 
 CMD ["./faas-inmemory"]
