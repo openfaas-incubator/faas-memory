@@ -34,7 +34,7 @@ func MakeFunctionReader() http.HandlerFunc {
 
 func readServices() ([]*requests.Function, error) {
 	var list []*requests.Function
-	for _, v := range functions{
+	for _, v := range functions {
 		list = append(list, v)
 	}
 
@@ -43,12 +43,12 @@ func readServices() ([]*requests.Function, error) {
 
 func createToRequest(request requests.CreateFunctionRequest) *requests.Function {
 	return &requests.Function{
-		Name: request.Service,
-		Annotations: request.Annotations,
-		EnvProcess: request.EnvProcess,
-		Image: request.Image,
-		Labels: request.Labels,
+		Name:              request.Service,
+		Annotations:       request.Annotations,
+		EnvProcess:        request.EnvProcess,
+		Image:             request.Image,
+		Labels:            request.Labels,
 		AvailableReplicas: 1,
-		Replicas: 1,
+		Replicas:          1,
 	}
 }

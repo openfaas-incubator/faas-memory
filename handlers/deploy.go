@@ -5,10 +5,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/openfaas/faas/gateway/requests"
-	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/openfaas/faas/gateway/requests"
+	log "github.com/sirupsen/logrus"
 )
 
 var functions = map[string]*requests.Function{}

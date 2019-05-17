@@ -5,22 +5,24 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/openfaas/faas/gateway/requests"
-	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/openfaas/faas/gateway/requests"
+	log "github.com/sirupsen/logrus"
 )
 
 // MakeDeleteHandler delete a function
 func MakeDeleteHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Info("deletsirupsene request")
+		log.Info("delete request")
 		defer r.Body.Close()
 
 		body, _ := ioutil.ReadAll(r.Body)
 		request := requests.DeleteFunctionRequest{}
 		if err := json.Unmarshal(body, &request); err != nil {
-			log.Errorln(err)
+			log.Errorf("error de-serializing request body:%s", body)
+			log.Error(err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}

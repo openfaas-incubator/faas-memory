@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
-	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/openfaas/faas/gateway/requests"
 )
