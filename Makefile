@@ -2,7 +2,7 @@ GO_FILES?=$$(find . -name '*.go' |grep -v vendor)
 TAG?=latest
 SQUASH?=false
 
-default: install build-resources lint vet build test testacc
+default: lint vet build test testacc
 
 .PHONY: test
 test: goimportscheck

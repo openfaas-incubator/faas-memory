@@ -5,8 +5,9 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/openfaas/faas/gateway/requests"
 	"net/http"
+
+	"github.com/openfaas/faas/gateway/requests"
 
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"

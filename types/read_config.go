@@ -83,7 +83,7 @@ func (ReadConfig) Read(hasEnv HasEnv) BootstrapConfig {
 
 // BootstrapConfig for the process.
 type BootstrapConfig struct {
-	Port                         int
-	ReadTimeout                  time.Duration
-	WriteTimeout                 time.Duration
+	Port         int
+	ReadTimeout  time.Duration
+	WriteTimeout time.Duration
 }

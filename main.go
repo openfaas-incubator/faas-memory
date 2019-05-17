@@ -1,12 +1,13 @@
 package main
 
 import (
+	"os"
+	"strings"
+
 	"github.com/ewilde/faas-inmemory/handlers"
 	"github.com/ewilde/faas-inmemory/types"
 	"github.com/ewilde/faas-inmemory/version"
-	"github.com/openfaas/faas-provider"
-	"os"
-	"strings"
+	bootstrap "github.com/openfaas/faas-provider"
 
 	bootTypes "github.com/openfaas/faas-provider/types"
 	log "github.com/sirupsen/logrus"
@@ -49,7 +50,6 @@ func main() {
 		HealthHandler:  handlers.MakeHealthHandler(),
 		InfoHandler:    handlers.MakeInfoHandler(version.BuildVersion(), version.GitCommitSHA),
 	}
-
 
 	readConfig := types.ReadConfig{}
 	osEnv := types.OsEnv{}
