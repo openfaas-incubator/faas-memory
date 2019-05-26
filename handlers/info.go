@@ -10,9 +10,9 @@ import (
 
 const (
 	//OrchestrationIdentifier identifier string for provider orchestration
-	OrchestrationIdentifier = "inmemory"
+	OrchestrationIdentifier = "memory"
 	//ProviderName name of the provider
-	ProviderName = "faas-inmemory"
+	ProviderName = "faas-memory"
 )
 
 //MakeInfoHandler creates handler for /system/info endpoint

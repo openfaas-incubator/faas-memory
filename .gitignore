@@ -2,6 +2,6 @@
 .vscode
 examples/
 dist
-faas-inmemory
+faas-memory
 dive.log
 deployment/k8s/yaml/gateway-dep.yml

@@ -14,7 +14,7 @@ testacc: goimportscheck
 
 .PHONY: build
 build:
-	docker build -t functions/faas-inmemory:$(TAG) . --squash=${SQUASH}
+	docker build -t functions/faas-memory:$(TAG) . --squash=${SQUASH}
 
 .PHONY: build-local
 build-local:
@@ -22,7 +22,7 @@ build-local:
         -X github.com/openfaas-incubator/faas-memory/version.GitCommitSHA=${GIT_COMMIT_SHA} \
         -X \"github.com/openfaas-incubator/faas-memory/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\" \
         -X github.com/openfaas-incubator/faas-memory/version.Version=${VERSION}" \
-        -o faas-inmemory .
+        -o faas-memory .
 
 .PHONY: up-local-deps
 up-local-deps:
@@ -30,9 +30,9 @@ up-local-deps:
 
 .PHONY: up-local
 up-local: build-local
-	-pkill faas-inmemory
+	-pkill faas-memory
 	docker-compose -f ./docker-compose.local.yml up -d
-	env port=8081 ./faas-inmemory
+	env port=8081 ./faas-memory
 
 .PHONY: release
 release:
