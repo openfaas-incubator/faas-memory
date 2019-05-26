@@ -14,14 +14,14 @@ testacc: goimportscheck
 
 .PHONY: build
 build:
-	docker build -t ewilde/faas-inmemory:$(TAG) . --squash=${SQUASH}
+	docker build -t functions/faas-inmemory:$(TAG) . --squash=${SQUASH}
 
 .PHONY: build-local
 build-local:
 	go build --ldflags "-s -w \
-        -X github.com/ewilde/faas-inmemory/version.GitCommitSHA=${GIT_COMMIT_SHA} \
-        -X \"github.com/ewilde/faas-inmemory/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\" \
-        -X github.com/ewilde/faas-inmemory/version.Version=${VERSION}" \
+        -X github.com/openfaas-incubator/faas-memory/version.GitCommitSHA=${GIT_COMMIT_SHA} \
+        -X \"github.com/openfaas-incubator/faas-memory/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\" \
+        -X github.com/openfaas-incubator/faas-memory/version.Version=${VERSION}" \
         -o faas-inmemory .
 
 .PHONY: up-local-deps
@@ -64,6 +64,7 @@ vet:
 .PHONY: lint
 lint:
 	@echo "golint ."
+	@go get golang.org/x/tools/cmd/goimports
 	@golint -set_exit_status $$(go list ./... | grep -v vendor/) ; if [ $$? -eq 1 ]; then \
 		echo ""; \
 		echo "Lint found errors in the source code. Please check the reported errors"; \

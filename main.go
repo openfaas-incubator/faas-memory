@@ -4,9 +4,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ewilde/faas-inmemory/handlers"
-	"github.com/ewilde/faas-inmemory/types"
-	"github.com/ewilde/faas-inmemory/version"
+	"github.com/openfaas-incubator/faas-memory/handlers"
+	"github.com/openfaas-incubator/faas-memory/types"
+	"github.com/openfaas-incubator/faas-memory/version"
 	bootstrap "github.com/openfaas/faas-provider"
 
 	bootTypes "github.com/openfaas/faas-provider/types"
