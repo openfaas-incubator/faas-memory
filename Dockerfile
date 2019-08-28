@@ -1,4 +1,5 @@
 FROM golang:1.11 as build
+ENV CGO_ENABLED=0
 
 RUN mkdir -p /go/src/github.com/openfaas-incubator/faas-memory/
 
