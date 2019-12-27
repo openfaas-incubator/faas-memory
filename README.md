@@ -45,8 +45,3 @@ Function                      	Invocations    	Replicas
 figlet                        	0              	1    
 ```
 
-More coming soon..
-
-## Acknowledgements
-
-This provider was built by Edward Wilde.
