@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/openfaas/faas/gateway/requests"
+	typesv1 "github.com/openfaas/faas-provider/types"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -32,8 +32,8 @@ func MakeFunctionReader() http.HandlerFunc {
 	}
 }
 
-func readServices() ([]*requests.Function, error) {
-	var list []*requests.Function
+func readServices() ([]*typesv1.FunctionStatus, error) {
+	var list []*typesv1.FunctionStatus
 	for _, v := range functions {
 		list = append(list, v)
 	}
@@ -41,8 +41,8 @@ func readServices() ([]*requests.Function, error) {
 	return list, nil
 }
 
-func createToRequest(request requests.CreateFunctionRequest) *requests.Function {
-	return &requests.Function{
+func requestToStatus(request typesv1.FunctionDeployment) *typesv1.FunctionStatus {
+	return &typesv1.FunctionStatus{
 		Name:              request.Service,
 		Annotations:       request.Annotations,
 		EnvProcess:        request.EnvProcess,

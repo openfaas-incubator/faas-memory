@@ -7,9 +7,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/openfaas/faas/gateway/requests"
-
 	"github.com/gorilla/mux"
+	typesv1 "github.com/openfaas/faas-provider/types"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -29,7 +28,7 @@ func MakeReplicaReader() http.HandlerFunc {
 		vars := mux.Vars(r)
 		functionName := vars["name"]
 
-		found := &requests.Function{}
+		found := &typesv1.FunctionStatus{}
 		found.Name = functionName
 		found.AvailableReplicas = 1
 

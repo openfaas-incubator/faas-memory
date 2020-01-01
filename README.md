@@ -14,18 +14,12 @@ In one terminal, build and start the provider:
 export GOPATH=$HOME/go
 go get -u github.com/openfaas-incubator/faas-memory
 cd $GOPATH/go/src/github.com/openfaas-incubator/faas-memory
-
-make build-local
-
-port=8083 ./faas-provider
+make start
 ```
 
 In another use the CLI with it:
 
 ```sh
-$ export GOPATH=$HOME/go
-$ cd $GOPATH/go/src/github.com/openfaas-incubator/faas-memory
-
 $ export OPENFAAS_URL=127.0.0.1:8083
 
 $ faas-cli list
@@ -42,6 +36,6 @@ URL: http://127.0.0.1:8083/function/figlet
 $ faas-cli list
 
 Function                      	Invocations    	Replicas
-figlet                        	0              	1    
+figlet                        	0              	1
 ```
 

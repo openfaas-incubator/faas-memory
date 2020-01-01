@@ -18,24 +18,18 @@
   version = "v1.0.2"
 
 [[projects]]
-  digest = "1:3f69624cb4ae8ab815a672f7d169d64786ee027a9d42eefab3c9d4e9debe0750"
-  name = "github.com/openfaas/faas"
-  packages = ["gateway/requests"]
-  pruneopts = "UT"
-  revision = "fa93655d90d1518b04e7cfca7d7548d7d133a34e"
-  version = "0.13.0"
-
-[[projects]]
-  digest = "1:698444ab032d6e8528ae9171659941a2afea8003978c240e860936128e22a8c6"
+  digest = "1:b06505dc7b4a032260e155473b7c9dfc8063eb13aace542304feaf0f6a5547ab"
   name = "github.com/openfaas/faas-provider"
   packages = [
     ".",
     "auth",
+    "httputil",
+    "logs",
     "types",
   ]
   pruneopts = "UT"
-  revision = "6a76a052deb12fd94b373c082963d8a8ad44d4d1"
-  version = "0.9.0"
+  revision = "8f7c35975e1b2bf8286c2f90ee51633eec427491"
+  version = "0.14.0"
 
 [[projects]]
   digest = "1:fd61cf4ae1953d55df708acb6b91492d538f49c305b364a014049914495db426"
@@ -59,8 +53,8 @@
   input-imports = [
     "github.com/gorilla/mux",
     "github.com/openfaas/faas-provider",
+    "github.com/openfaas/faas-provider/logs",
     "github.com/openfaas/faas-provider/types",
-    "github.com/openfaas/faas/gateway/requests",
     "github.com/sirupsen/logrus",
   ]
   solver-name = "gps-cdcl"
