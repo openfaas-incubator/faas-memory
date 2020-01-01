@@ -9,6 +9,7 @@ import (
 	"github.com/openfaas-incubator/faas-memory/version"
 	bootstrap "github.com/openfaas/faas-provider"
 
+	"github.com/openfaas/faas-provider/logs"
 	bootTypes "github.com/openfaas/faas-provider/types"
 	log "github.com/sirupsen/logrus"
 )
@@ -39,21 +40,24 @@ func main() {
 
 	log.Infof("faas-memory version:%s. Last commit message: %s, commit SHA: %s'", version.BuildVersion(), version.GitCommitMessage, version.GitCommitSHA)
 
-	bootstrapHandlers := bootTypes.FaaSHandlers{
-		FunctionProxy:  handlers.MakeProxy(),
-		DeleteHandler:  handlers.MakeDeleteHandler(),
-		DeployHandler:  handlers.MakeDeployHandler(),
-		FunctionReader: handlers.MakeFunctionReader(),
-		ReplicaReader:  handlers.MakeReplicaReader(),
-		ReplicaUpdater: handlers.MakeReplicaUpdater(),
-		UpdateHandler:  handlers.MakeUpdateHandler(),
-		HealthHandler:  handlers.MakeHealthHandler(),
-		InfoHandler:    handlers.MakeInfoHandler(version.BuildVersion(), version.GitCommitSHA),
-	}
-
 	readConfig := types.ReadConfig{}
 	osEnv := types.OsEnv{}
 	cfg := readConfig.Read(osEnv)
+
+	bootstrapHandlers := bootTypes.FaaSHandlers{
+		FunctionProxy:        handlers.MakeProxy(),
+		DeleteHandler:        handlers.MakeDeleteHandler(),
+		DeployHandler:        handlers.MakeDeployHandler(),
+		FunctionReader:       handlers.MakeFunctionReader(),
+		ReplicaReader:        handlers.MakeReplicaReader(),
+		ReplicaUpdater:       handlers.MakeReplicaUpdater(),
+		UpdateHandler:        handlers.MakeUpdateHandler(),
+		HealthHandler:        handlers.MakeHealthHandler(),
+		InfoHandler:          handlers.MakeInfoHandler(version.BuildVersion(), version.GitCommitSHA),
+		SecretHandler:        handlers.MakeSecretsHandler(),
+		LogHandler:           logs.NewLogHandlerFunc(handlers.NewLogRequester(), cfg.WriteTimeout),
+		ListNamespaceHandler: handlers.NamespaceLister(),
+	}
 
 	bootstrapConfig := bootTypes.FaaSConfig{
 		ReadTimeout:     cfg.ReadTimeout,

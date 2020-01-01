@@ -5,9 +5,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	typesv1 "github.com/openfaas/faas-provider/types"
 	log "github.com/sirupsen/logrus"
-
-	"github.com/openfaas/faas/gateway/requests"
 )
 
 // MakeUpdateHandler update specified function
@@ -19,7 +18,7 @@ func MakeUpdateHandler() http.HandlerFunc {
 
 		body, _ := ioutil.ReadAll(r.Body)
 
-		request := requests.CreateFunctionRequest{}
+		request := typesv1.FunctionDeployment{}
 		if err := json.Unmarshal(body, &request); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return
@@ -32,6 +31,6 @@ func MakeUpdateHandler() http.HandlerFunc {
 			return
 		}
 
-		functions[request.Service] = createToRequest(request)
+		functions[request.Service] = requestToStatus(request)
 	}
 }

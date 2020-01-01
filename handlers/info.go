@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/openfaas/faas-provider/types"
+	typesv1 "github.com/openfaas/faas-provider/types"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -24,16 +24,16 @@ func MakeInfoHandler(version, sha string) http.HandlerFunc {
 
 		log.Info("info request")
 
-		infoRequest := types.InfoRequest{
+		infoResponse := typesv1.InfoResponse{
 			Orchestration: OrchestrationIdentifier,
 			Provider:      ProviderName,
-			Version: types.ProviderVersion{
+			Version: typesv1.ProviderVersion{
 				Release: version,
 				SHA:     sha,
 			},
 		}
 
-		jsonOut, marshalErr := json.Marshal(infoRequest)
+		jsonOut, marshalErr := json.Marshal(infoResponse)
 		if marshalErr != nil {
 			log.Error("Error during unmarshal of info request ", marshalErr)
 			w.WriteHeader(http.StatusInternalServerError)
