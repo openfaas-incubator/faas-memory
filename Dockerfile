@@ -1,3 +1,5 @@
+FROM teamserverless/license-check:0.3.6 as license-check
+
 FROM golang:1.11 as build
 ENV CGO_ENABLED=0
 
@@ -7,8 +9,8 @@ WORKDIR /go/src/github.com/openfaas-incubator/faas-memory
 
 COPY . .
 
-RUN curl -sL https://github.com/alexellis/license-check/releases/download/0.2.2/license-check > /usr/bin/license-check \
-   && chmod +x /usr/bin/license-check
+COPY --from=license-check /license-check /usr/bin/
+
 RUN license-check -path ./ --verbose=false "Alex Ellis" "OpenFaaS Author(s)"
 
 RUN gofmt -l -d $(find . -type f -name '*.go' -not -path "./vendor/*") \
