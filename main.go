@@ -4,9 +4,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/openfaas-incubator/faas-memory/handlers"
-	"github.com/openfaas-incubator/faas-memory/types"
-	"github.com/openfaas-incubator/faas-memory/version"
+	"github.com/yannip1234/faas-memory/handlers"
+	"github.com/yannip1234/faas-memory/types"
+	"github.com/yannip1234/faas-memory/version"
 	bootstrap "github.com/openfaas/faas-provider"
 
 	"github.com/openfaas/faas-provider/logs"
