@@ -3,9 +3,9 @@ FROM teamserverless/license-check:0.3.6 as license-check
 FROM golang:1.11 as build
 ENV CGO_ENABLED=0
 
-RUN mkdir -p /go/src/github.com/openfaas-incubator/faas-memory/
+RUN mkdir -p /go/src/github.com/yannip1234/faas-memory/
 
-WORKDIR /go/src/github.com/openfaas-incubator/faas-memory
+WORKDIR /go/src/github.com/yannip1234/faas-memory
 
 COPY . .
 
@@ -41,6 +41,6 @@ EXPOSE 8080
 ENV http_proxy      ""
 ENV https_proxy     ""
 
-COPY --from=build /go/src/github.com/openfaas-incubator/faas-memory/faas-memory    .
+COPY --from=build /go/src/github.com/yannip1234/faas-memory/faas-memory    .
 
 CMD ["./faas-memory"]

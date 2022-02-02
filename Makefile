@@ -19,9 +19,9 @@ build:
 .PHONY: build-local
 build-local:
 	GO111MODULE=off go build --ldflags "-s -w \
-        -X github.com/openfaas-incubator/faas-memory/version.GitCommitSHA=${GIT_COMMIT_SHA} \
-        -X \"github.com/openfaas-incubator/faas-memory/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\" \
-        -X github.com/openfaas-incubator/faas-memory/version.Version=${VERSION}" \
+        -X github.com/yannip1234/faas-memory/version.GitCommitSHA=${GIT_COMMIT_SHA} \
+        -X \"github.com/yannip1234/faas-memory/version.GitCommitMessage=${GIT_COMMIT_MESSAGE}\" \
+        -X github.com/yannip1234/faas-memory/version.Version=${VERSION}" \
         -o faas-memory .
 
 
