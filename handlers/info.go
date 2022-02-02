@@ -23,14 +23,16 @@ func MakeInfoHandler(version, sha string) http.HandlerFunc {
 		}
 
 		log.Info("info request")
-
+		
+		temp := typesv1.VersionInfo{
+				Release: version,
+				SHA:     sha,
+			}
+		
 		infoResponse := typesv1.ProviderInfo{
 			Orchestration: OrchestrationIdentifier,
 			Name:      ProviderName,
-			Version: typesv1.VersionInfo{
-				Release: version,
-				SHA:     sha,
-			},
+			Version: &temp,
 		}
 
 		jsonOut, marshalErr := json.Marshal(infoResponse)
