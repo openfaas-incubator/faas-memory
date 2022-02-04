@@ -12,9 +12,9 @@ In one terminal, build and start the provider:
 
 ```sh
 export GOPATH=$HOME/go
-go get -u github.com/openfaas-incubator/faas-memory
-cd $GOPATH/go/src/github.com/openfaas-incubator/faas-memory
-make start
+go install github.com/yannip1234/faas-memory
+cd faas-memory
+go build
 ```
 
 In another use the CLI with it:
