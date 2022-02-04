@@ -53,6 +53,6 @@ func MakeProxy() http.HandlerFunc {
 
 		w.Write(responseBody)
 
-		log.Infof("proxy request: %s completed.", name)
+		log.Infof("!!!!!proxy request: %s completed.", name)
 	}
 }
