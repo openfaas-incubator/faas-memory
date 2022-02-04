@@ -12,7 +12,7 @@ In one terminal, build and start the provider:
 
 ```sh
 export GOPATH=$HOME/go
-go install github.com/yannip1234/faas-memory
+go install github.com/yannip1234/faas-memory@1.3
 cd faas-memory
 go build
 ```
