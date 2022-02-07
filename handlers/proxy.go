@@ -30,6 +30,16 @@ func MakeProxy() http.HandlerFunc {
 			log.Errorf("%s not found", name)
 			return
 		}
+		
+		
+		resp, err := http.Get("https://jsonplaceholder.typicode.com/posts/1")
+		if err != nil {
+		log.Fatalln(err)
+		}
+		//We Read the response body on the line below.
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+		   log.Fatalln(err)
 
 		v.InvocationCount = v.InvocationCount + 1
 
