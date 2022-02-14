@@ -5,9 +5,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-
+	"time"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
+	"github.com/btittelbach/go-bbhw"
 )
 
 type response struct {
@@ -16,6 +17,15 @@ type response struct {
 	HostName     string
 }
 
+func gpio_turn_on(pin_num uint) error {
+	pin, err := bbhw.NewSysfsGPIO(pin_num, bbhw.OUT)
+	err = pin.SetState(true)
+	time.Sleep(500 * time.Millisecond)
+	err = pin.SetState(false)
+	time.Sleep(500 * time.Millisecond)
+	err = pin.SetState(true)
+	return err
+}
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
 func MakeProxy() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -31,16 +41,16 @@ func MakeProxy() http.HandlerFunc {
 			return
 		}
 
-		resp, err := http.Get("https://jsonplaceholder.typicode.com/posts/1")
-		if err != nil {
-		log.Fatalln(err)
+
+
+		//worker_list := [2]uint{66, 48}
+
+		worker_list := map[int]uint{
+			1: 66,
+			2: 48,
 		}
-		//We Read the response body on the line below.
-		tempBody, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-		   log.Fatalln(err)
-		}
-		log.Info("Body text of simple get ", string(tempBody))
+
+		gpio_turn_on(worker_list[1])
 
 		v.InvocationCount = v.InvocationCount + 1
 
