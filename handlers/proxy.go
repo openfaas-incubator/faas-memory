@@ -42,15 +42,13 @@ func MakeProxy() http.HandlerFunc {
 		}
 
 
-
-		//worker_list := [2]uint{66, 48}
-
 		worker_list := map[int]uint{
-			1: 66,
-			2: 48,
+			1: 48, // works
+			2: 67, // works
+			3: 68, // works
 		}
 
-		gpio_turn_on(worker_list[1])
+		gpio_turn_on(worker_list[3])
 
 		v.InvocationCount = v.InvocationCount + 1
 
