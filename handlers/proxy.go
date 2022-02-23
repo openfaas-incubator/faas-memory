@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"encoding/json"
+	// b64 "encoding/base64"
+	// "fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -9,6 +11,8 @@ import (
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"github.com/btittelbach/go-bbhw"
+	
+
 )
 
 type response struct {
@@ -26,6 +30,13 @@ func gpio_turn_on(pin_num uint) error {
 	err = pin.SetState(true)
 	return err
 }
+type Payload struct{
+	Fid string `json:"fid"`
+	Src string `json:"src"`
+	Params string `json:"params"`
+	Lang string `json:"lang"`
+}
+
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
 func MakeProxy() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -41,7 +52,7 @@ func MakeProxy() http.HandlerFunc {
 			return
 		}
 
-
+		// Working GPIO pins
 		worker_list := map[int]uint{
 			1: 48, // works
 			2: 67, // works
@@ -54,15 +65,26 @@ func MakeProxy() http.HandlerFunc {
 
 		defer r.Body.Close()
 		body, _ := ioutil.ReadAll(r.Body)
+		// body_str := string(body)
+		// log.Info(body_str)
+		// // log.Info([]byte(body_str))
+		// var payload Payload
+		// json.Unmarshal([]byte(body_str), &payload)
+		// log.Info(payload.Src)
+		// data, _ := b64.StdEncoding.DecodeString(payload.Src)
+		// log.Info(string(data))
+
 
 		hostName, _ := os.Hostname()
 		d := &response{
 			Function:     name,
-			ResponseBody: string(body),
+			ResponseBody: "'" + string(body) + "'",
 			HostName:     hostName,
 		}
 
+
 		responseBody, err := json.Marshal(d)
+
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
