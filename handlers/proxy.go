@@ -11,7 +11,8 @@ import (
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"github.com/btittelbach/go-bbhw"
-	
+	"bytes"
+	// "strconv"
 
 )
 
@@ -33,7 +34,7 @@ func gpio_turn_on(pin_num uint) error {
 type Payload struct{
 	Fid string `json:"fid"`
 	Src string `json:"src"`
-	Params string `json:"params"`
+	Params string `json:"params,omitempty"`
 	Lang string `json:"lang"`
 }
 
@@ -65,14 +66,26 @@ func MakeProxy() http.HandlerFunc {
 
 		defer r.Body.Close()
 		body, _ := ioutil.ReadAll(r.Body)
-		// body_str := string(body)
-		// log.Info(body_str)
-		// // log.Info([]byte(body_str))
+		// // body_str := string(body)
+		// // log.Info(body_str)/
+		// log.Info(string(body))
 		// var payload Payload
-		// json.Unmarshal([]byte(body_str), &payload)
-		// log.Info(payload.Src)
+		// json.Unmarshal([]byte(body), &payload)
+		// // log.Info(payload.Src)
 		// data, _ := b64.StdEncoding.DecodeString(payload.Src)
-		// log.Info(string(data))
+		// log.Info(data)
+		// s2, _ := strconv.Unquote(string(data))
+		// log.Info(s2)
+
+
+		resp, err := http.Post("http://128.197.176.240:8080/run", "application/json",
+			bytes.NewBuffer(body))
+
+		if err != nil {
+			log.Fatal(err)
+		}
+		resp_body, _ := ioutil.ReadAll(resp.Body)
+		log.Info(string(resp_body))
 
 
 		hostName, _ := os.Hostname()
