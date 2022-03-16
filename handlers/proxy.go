@@ -78,12 +78,16 @@ func MakeProxy() http.HandlerFunc {
 		// s2, _ := strconv.Unquote(string(payload.Worker))
 		// log.Info(payload.Worker)
 
-
-		resp, err := http.Post(payload.Worker, "application/json",
+		client := http.Client{
+			Timeout: 5 * time.Second,
+		}
+		resp, err := client.Post(payload.Worker, "application/json",
 			bytes.NewBuffer(body))
 
 		if err != nil {
-			log.Fatal(err)
+			// log.Fatal(err)
+			log.Info("HIT AN ERROR HERE ${err}")
+			return
 		}
 		resp_body, _ := ioutil.ReadAll(resp.Body)
 		log.Info(string(resp_body))
