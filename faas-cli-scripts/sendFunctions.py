@@ -13,12 +13,13 @@ payload = {
     "\"fid\"": "\"test\"",
     "\"src\"": "\"" + base64.b64encode(src_code.encode('ascii')).decode('ascii') + "\"",
     "\"params\"": "\"HELLLOOOO\"",
-    "\"lang\"": "\"micropython\""
+    "\"lang\"": "\"micropython\"",
+    "\"worker\"": "\"http://128.197.176.240:8080/run\""
 }
 
 
 payload_dumps = (json.dumps(payload))
-
+print(payload_dumps + "\n")
 # Call the payload using faas-cli invoke and send to provider
 res = subprocess.check_output(f"echo {payload_dumps} | faas-cli invoke figlet", shell=True)
 

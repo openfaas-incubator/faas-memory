@@ -36,6 +36,7 @@ type Payload struct{
 	Src string `json:"src"`
 	Params string `json:"params,omitempty"`
 	Lang string `json:"lang"`
+	Worker string `json:"worker"`
 }
 
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
@@ -66,19 +67,19 @@ func MakeProxy() http.HandlerFunc {
 
 		defer r.Body.Close()
 		body, _ := ioutil.ReadAll(r.Body)
-		// // body_str := string(body)
-		// // log.Info(body_str)/
-		// log.Info(string(body))
-		// var payload Payload
-		// json.Unmarshal([]byte(body), &payload)
-		// // log.Info(payload.Src)
-		// data, _ := b64.StdEncoding.DecodeString(payload.Src)
+		// body_str := string(body)
+		// log.Info(body_str)/
+		log.Info(string(body))
+		var payload Payload
+		json.Unmarshal([]byte(body), &payload)
+		// log.Info(payload.Src)
+		// data, _ := payload.Worker
 		// log.Info(data)
-		// s2, _ := strconv.Unquote(string(data))
-		// log.Info(s2)
+		// s2, _ := strconv.Unquote(string(payload.Worker))
+		// log.Info(payload.Worker)
 
 
-		resp, err := http.Post("http://128.197.176.240:8080/run", "application/json",
+		resp, err := http.Post(payload.Worker, "application/json",
 			bytes.NewBuffer(body))
 
 		if err != nil {
