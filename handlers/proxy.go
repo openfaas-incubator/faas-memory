@@ -91,7 +91,7 @@ func MakeProxy() http.HandlerFunc {
 		hostName, _ := os.Hostname()
 		d := &response{
 			Function:     name,
-			ResponseBody: "'" + string(body) + "'",
+			ResponseBody: string(resp_body) ,
 			HostName:     hostName,
 		}
 
