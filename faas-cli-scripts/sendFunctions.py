@@ -1,3 +1,4 @@
+from enum import Enum
 import os
 import json
 import base64
@@ -23,16 +24,29 @@ def runJob(payload_dumps):
         print("RESULT IS: " + result + "\n")
     return
 
+# Worker class
+class Worker:
+    def __init__(self, id, ip, status):
+        self.id = id
+        self.ip = ip
+        self.status = status
+
+# Enumerated statuses for each worker
+class Status(Enum):
+    READY = 1
+    RUNNING = 2
+    POWEROFF = 3
 
 if __name__ == "__main__":
     os.system("faas-cli store deploy figlet")
 
-    # IP Addresses for all workers
-    all_workers = {
-        1: "192.168.1.20",
-        2: "192.168.1.21",
-        3: "192.168.1.22"
-    }
+    # Worker objects for each worker
+    all_workers = [
+        Worker(1, "192.168.1.20", Status.READY),
+        Worker(2, "192.168.1.21", Status.READY),
+        Worker(3, "192.168.1.22", Status.READY),
+
+    ]
 
     # Open python script with function to run on a worker and make it into a JSON tring
     with open("print.py", "r") as f:
@@ -40,14 +54,15 @@ if __name__ == "__main__":
         src_code = json.dumps(src_code)
 
     threads = []
-    for i in range(1,4):
+    for i in range(3):
+        print(i)
         # Package an encrypted JSON string into a payload JSON 
         payload = {
             "\"fid\"": "\"test\"",
             "\"src\"": "\"" + base64.b64encode(src_code.encode('ascii')).decode('ascii') + "\"",
             "\"params\"": f"\"HELLLOOOO {i}\"",
             "\"lang\"": "\"micropython\"",
-            "\"worker\"": f"\"http://{all_workers[i]}:8080/run\""
+            "\"worker\"": f"\"http://{all_workers[i].ip}:8080/run\""
         }
         payload_dumps = (json.dumps(payload))
         print(payload_dumps + "\n")
