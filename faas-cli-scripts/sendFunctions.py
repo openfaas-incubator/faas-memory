@@ -29,9 +29,9 @@ if __name__ == "__main__":
 
     # IP Addresses for all workers
     all_workers = {
-        1: "128.197.176.240",
-        2: "128.197.176.241",
-        3: "128.197.176.242"
+        1: "192.168.1.20",
+        2: "192.168.1.21",
+        3: "192.168.1.22"
     }
 
     # Open python script with function to run on a worker and make it into a JSON tring
