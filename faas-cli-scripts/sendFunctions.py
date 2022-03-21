@@ -6,7 +6,7 @@ import subprocess
 import threading
 import sys
 
-NUM_JOBS = 100
+NUM_JOBS = 15
 
 # Worker class
 class Worker:
@@ -74,6 +74,7 @@ if __name__ == "__main__":
                     "\"worker\"": f"\"http://{worker.ip}:8080/run\""
                 }
                 payload_dumps = (json.dumps(payload))
+                print(payload_dumps)
                 worker.queue.append(payload_dumps)
                 print("added job to worker ", worker.id, "and it is now length", len(worker.queue))
                 queued_count += 1
@@ -88,7 +89,7 @@ if __name__ == "__main__":
                 t = threading.Thread(target=runJob, args=(worker.queue[0],))
                 threads.append(t)
                 t.start()
-
+                print("job running on worker", worker.id)
                 # Pop the first payload from the queue
                 worker.queue.pop(0)
                 completed_count += 1

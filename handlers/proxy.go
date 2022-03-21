@@ -39,6 +39,12 @@ type Payload struct{
 	Worker string `json:"worker"`
 }
 
+type FuncCall struct{
+	Params string `json:"params,omitempty"`
+	Lang string `json:"lang,omitempty"`
+	Worker string `json:"worker"`
+}
+
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
 func MakeProxy() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -53,7 +59,7 @@ func MakeProxy() http.HandlerFunc {
 			log.Errorf("%s not found", name)
 			return
 		}
-
+		log.Info("V IMAGE IS!!!!!!! : " + v.Image)
 		// Working GPIO pins
 		worker_list := map[int]uint{
 			1: 48, // works
@@ -67,24 +73,23 @@ func MakeProxy() http.HandlerFunc {
 
 		defer r.Body.Close()
 		body, _ := ioutil.ReadAll(r.Body)
-		// body_str := string(body)
-		// log.Info(body_str)/
 		log.Info(string(body))
 		var payload Payload
-		json.Unmarshal([]byte(body), &payload)
-		// log.Info(payload.Src)
-		// data, _ := payload.Worker
-		// log.Info(data)
-		// s2, _ := strconv.Unquote(string(payload.Worker))
-		// log.Info(payload.Worker)
+		var func_call FuncCall
+		json.Unmarshal([]byte(body), &func_call)
 
+		payload.Src = v.Image
+		payload.Params = func_call.Params
+		payload.Worker = func_call.Worker
+		payload.Lang = func_call.Lang
+		packet, marshal_err := json.Marshal(payload)
 		client := http.Client{
 			Timeout: 5 * time.Second,
 		}
 		resp, err := client.Post(payload.Worker, "application/json",
-			bytes.NewBuffer(body))
+			bytes.NewBuffer(packet))
 
-		if err != nil {
+		if err != nil ||  marshal_err != nil {
 			// log.Fatal(err)
 			log.Info("HIT AN ERROR HERE ${err}")
 			return
