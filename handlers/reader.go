@@ -15,7 +15,7 @@ import (
 func MakeFunctionReader() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		log.Info("read request")
+		// log.Info("read request")
 		functions, err := readServices()
 		if err != nil {
 			log.Printf("Error getting service list: %s\n", err.Error())

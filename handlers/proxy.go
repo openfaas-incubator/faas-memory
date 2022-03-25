@@ -12,7 +12,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/btittelbach/go-bbhw"
 	"bytes"
-	// "strconv"
+	"strconv"
 
 )
 
@@ -43,6 +43,37 @@ type FuncCall struct{
 	Params string `json:"params,omitempty"`
 	Lang string `json:"lang,omitempty"`
 	Worker string `json:"worker"`
+}
+
+type Status int64
+
+const (
+	READY    Status = 0
+	RUNNING         = 1
+	POWEROFF        = 2
+)
+
+type Worker struct {
+	id     int
+	ip     string
+	status Status
+}
+//List of workers
+var allWorkers = []Worker{
+	Worker{0, "192.168.1.20", READY},
+	Worker{1, "192.168.1.21", READY},
+	Worker{2, "192.168.1.22", READY},
+}
+
+func find_worker() string {
+	for {
+		for _, worker := range allWorkers {
+			if(worker.status == READY){
+				log.Info("Chose worker: " + strconv.Itoa(worker.id))
+				return worker.ip
+			}
+		}
+  	}
 }
 
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
@@ -86,7 +117,9 @@ func MakeProxy() http.HandlerFunc {
 		client := http.Client{
 			Timeout: 5 * time.Second,
 		}
-		resp, err := client.Post(payload.Worker, "application/json",
+		
+		url := "http://" + find_worker() + ":8080/run"
+		resp, err := client.Post(url, "application/json",
 			bytes.NewBuffer(packet))
 
 		if err != nil ||  marshal_err != nil {

@@ -23,7 +23,7 @@ func MakeReplicaUpdater() http.HandlerFunc {
 // MakeReplicaReader reads the amount of replicas for a deployment
 func MakeReplicaReader() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		log.Info("read replicas")
+		// log.Info("read replicas")
 
 		vars := mux.Vars(r)
 		functionName := vars["name"]
