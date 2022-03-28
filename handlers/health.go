@@ -18,10 +18,11 @@ func MakeHealthHandler() http.HandlerFunc {
 		defer r.Body.Close()
 		log.Info("health check request")
 		log.Info("healthy from " + (userIP.String()))
-		for _, worker := range allWorkers{
-			if (worker.ip == userIP.String()){
-				worker.status = READY
-				log.Info(worker.ip+"is READY")
+		for i := range allWorkers{
+			if (allWorkers[i].ip == userIP.String()){
+				allWorkers[i].status = READY
+				log.Info(allWorkers[i].ip+"is READY")
+				log.Info(allWorkers[0].status, allWorkers[1].status, allWorkers[2].status)
 			}
 		}
 		w.WriteHeader(http.StatusOK)

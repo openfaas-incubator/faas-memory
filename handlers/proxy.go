@@ -60,17 +60,19 @@ type Worker struct {
 }
 //List of workers
 var allWorkers = []Worker{
-	Worker{0, "192.168.1.20", READY},
+	Worker{0, "192.168.1.20", POWEROFF},
 	Worker{1, "192.168.1.21", READY},
 	Worker{2, "192.168.1.22", READY},
 }
 
 func find_worker() string {
 	for {
-		for _, worker := range allWorkers {
-			if(worker.status == READY){
-				log.Info("Chose worker: " + strconv.Itoa(worker.id))
-				return worker.ip
+		for i := range allWorkers {
+			if(allWorkers[i].status == READY){
+				log.Info("Chose worker: " + strconv.Itoa(allWorkers[i].id))
+				allWorkers[i].status = RUNNING
+				log.Info(allWorkers[0].status, allWorkers[1].status, allWorkers[2].status)
+				return allWorkers[i].ip
 			}
 		}
   	}
@@ -115,7 +117,7 @@ func MakeProxy() http.HandlerFunc {
 		payload.Lang = func_call.Lang
 		packet, marshal_err := json.Marshal(payload)
 		client := http.Client{
-			Timeout: 5 * time.Second,
+			Timeout: 30 * time.Second,
 		}
 		
 		url := "http://" + find_worker() + ":8080/run"
@@ -124,7 +126,7 @@ func MakeProxy() http.HandlerFunc {
 
 		if err != nil ||  marshal_err != nil {
 			// log.Fatal(err)
-			log.Info("HIT AN ERROR HERE ${err}")
+			log.Info("HIT AN ERROR HERE", err)
 			return
 		}
 		resp_body, _ := ioutil.ReadAll(resp.Body)
