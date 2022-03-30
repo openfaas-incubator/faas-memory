@@ -60,7 +60,7 @@ type Worker struct {
 }
 //List of workers
 var allWorkers = []Worker{
-	Worker{0, "192.168.1.20", POWEROFF},
+	Worker{0, "192.168.1.20", READY},
 	Worker{1, "192.168.1.21", READY},
 	Worker{2, "192.168.1.22", READY},
 }
@@ -81,6 +81,7 @@ func find_worker() string {
 // MakeProxy creates a proxy for HTTP web requests which can be routed to a function.
 func MakeProxy() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// r.Close = true
 		vars := mux.Vars(r)
 		name := vars["name"]
 		log.Info("proxy request: " + name)
@@ -92,7 +93,7 @@ func MakeProxy() http.HandlerFunc {
 			log.Errorf("%s not found", name)
 			return
 		}
-		log.Info("V IMAGE IS!!!!!!! : " + v.Image)
+		log.Info("V IMAGfE IS!!!!!!! : " + v.Image)
 		// Working GPIO pins
 		worker_list := map[int]uint{
 			1: 48, // works
