@@ -21,7 +21,7 @@ func MakeHealthHandler() http.HandlerFunc {
 		for i := range allWorkers{
 			if (allWorkers[i].ip == userIP.String()){
 				allWorkers[i].status = READY
-				log.Info(allWorkers[i].ip+"is READY")
+				log.Info(allWorkers[i].ip+" is READY")
 				log.Info(allWorkers[0].status, allWorkers[1].status, allWorkers[2].status)
 			}
 		}

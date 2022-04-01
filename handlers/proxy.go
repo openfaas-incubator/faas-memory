@@ -16,6 +16,13 @@ import (
 
 )
 
+type WorkerResponse struct {
+	Fid         string        `json:"fid"`
+	TimeElapsed time.Duration `json:"time_elapsed"`
+	Result      string        `json:"result"`
+	Error       string        `json:"error,omitempty"`
+}
+
 type response struct {
 	Function     string
 	ResponseBody string
@@ -93,7 +100,7 @@ func MakeProxy() http.HandlerFunc {
 			log.Errorf("%s not found", name)
 			return
 		}
-		log.Info("V IMAGfE IS!!!!!!! : " + v.Image)
+
 		// Working GPIO pins
 		worker_list := map[int]uint{
 			1: 48, // works
@@ -111,7 +118,7 @@ func MakeProxy() http.HandlerFunc {
 		var payload Payload
 		var func_call FuncCall
 		json.Unmarshal([]byte(body), &func_call)
-
+		payload.Fid = name
 		payload.Src = v.Image
 		payload.Params = func_call.Params
 		payload.Worker = func_call.Worker
@@ -127,7 +134,7 @@ func MakeProxy() http.HandlerFunc {
 
 		if err != nil ||  marshal_err != nil {
 			// log.Fatal(err)
-			log.Info("HIT AN ERROR HERE", err)
+			log.Info("HIT AN ERROR HERE: ", err)
 			return
 		}
 		resp_body, _ := ioutil.ReadAll(resp.Body)
@@ -140,6 +147,9 @@ func MakeProxy() http.HandlerFunc {
 			ResponseBody: string(resp_body) ,
 			HostName:     hostName,
 		}
+		var worker_resp WorkerResponse
+		json.Unmarshal([]byte(resp_body), &worker_resp)
+		log.Info(worker_resp)
 
 
 		responseBody, err := json.Marshal(d)
@@ -153,6 +163,6 @@ func MakeProxy() http.HandlerFunc {
 
 		w.Write(responseBody)
 
-		log.Info("!!!!!proxy request: %s completed.", name)
+		log.Info("proxy request completed: ", name)
 	}
 }
