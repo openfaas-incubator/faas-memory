@@ -6,7 +6,7 @@ import (
 	// "fmt"
 	"io/ioutil"
 	"net/http"
-	"os"
+	// "os"
 	"time"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
@@ -141,18 +141,18 @@ func MakeProxy() http.HandlerFunc {
 		log.Info(string(resp_body))
 
 
-		hostName, _ := os.Hostname()
-		d := &response{
-			Function:     name,
-			ResponseBody: string(resp_body) ,
-			HostName:     hostName,
-		}
+		// hostName, _ := os.Hostname()
+		// d := &response{
+		// 	Function:     name,
+		// 	ResponseBody: string(resp_body) ,
+		// 	HostName:     hostName,
+		// }
 		var worker_resp WorkerResponse
 		json.Unmarshal([]byte(resp_body), &worker_resp)
-		log.Info(worker_resp)
 
 
-		responseBody, err := json.Marshal(d)
+
+		responseBody, err := json.Marshal(worker_resp)
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
