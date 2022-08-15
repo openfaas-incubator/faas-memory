@@ -24,7 +24,6 @@ build-local:
         -X github.com/openfaas-incubator/faas-memory/version.Version=${VERSION}" \
         -o faas-memory .
 
-
 .PHONY: start
 start: build-local
 	port=8083 ./faas-memory

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+PATH=$PATH:$(go env GOPATH)/bin
+
 # Check goimports
 echo "==> Checking that code complies with goimports requirements..."
 goimports_files=$(goimports -l `find . -name '*.go' | grep -v vendor`)

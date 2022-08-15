@@ -1,6 +1,6 @@
-FROM teamserverless/license-check:0.3.6 as license-check
+FROM ghcr.io/openfaas/license-check:0.4.1 as license-check
 
-FROM golang:1.11 as build
+FROM golang:1.18 as build
 ENV CGO_ENABLED=0
 
 RUN mkdir -p /go/src/github.com/openfaas-incubator/faas-memory/
