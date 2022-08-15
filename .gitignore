@@ -5,3 +5,4 @@ dist
 faas-memory
 dive.log
 deployment/k8s/yaml/gateway-dep.yml
+vendor/
