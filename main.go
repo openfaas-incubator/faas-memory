@@ -7,10 +7,10 @@ import (
 	"github.com/openfaas-incubator/faas-memory/handlers"
 	"github.com/openfaas-incubator/faas-memory/types"
 	"github.com/openfaas-incubator/faas-memory/version"
-	bootstrap "github.com/openfaas/faas-provider"
+	faasProvider "github.com/openfaas/faas-provider"
 
 	"github.com/openfaas/faas-provider/logs"
-	bootTypes "github.com/openfaas/faas-provider/types"
+	providertypes "github.com/openfaas/faas-provider/types"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -44,7 +44,7 @@ func main() {
 	osEnv := types.OsEnv{}
 	cfg := readConfig.Read(osEnv)
 
-	bootstrapHandlers := bootTypes.FaaSHandlers{
+	faasProviderHandlers := providertypes.FaaSHandlers{
 		FunctionProxy:        handlers.MakeProxy(),
 		DeleteHandler:        handlers.MakeDeleteHandler(),
 		DeployHandler:        handlers.MakeDeployHandler(),
@@ -59,7 +59,7 @@ func main() {
 		ListNamespaceHandler: handlers.NamespaceLister(),
 	}
 
-	bootstrapConfig := bootTypes.FaaSConfig{
+	faasProviderConfig := providertypes.FaaSConfig{
 		ReadTimeout:     cfg.ReadTimeout,
 		WriteTimeout:    cfg.WriteTimeout,
 		TCPPort:         &cfg.Port,
@@ -68,5 +68,5 @@ func main() {
 	}
 
 	log.Infof("listening on port %d ...", cfg.Port)
-	bootstrap.Serve(&bootstrapHandlers, &bootstrapConfig)
+	faasProvider.Serve(&faasProviderHandlers, &faasProviderConfig)
 }
