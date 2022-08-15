@@ -23,7 +23,7 @@ RUN gofmt -l -d $(find . -type f -name '*.go' -not -path "./vendor/*") \
     -a -installsuffix cgo -o faas-memory .
 
 # Release stage
-FROM alpine:3.10 as ship
+FROM alpine:3.16.2 as ship
 
 LABEL org.label-schema.license="MIT" \
       org.label-schema.vcs-url="https://github.com/openfaas/faas-memory" \
